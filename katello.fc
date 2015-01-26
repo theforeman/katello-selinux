@@ -15,5 +15,3 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see http://www.gnu.org/licenses/.
 #
-
-/usr/share/katello/script/katello-jobs -- gen_context(system_u:object_r:foreman_tasks_exec_t,s0)
