@@ -1,0 +1,8 @@
+TAGS
+pkg/
+tmp/
+local-tmp/
+*.pp
+*.pp.bz2
+*.pod
+*.8

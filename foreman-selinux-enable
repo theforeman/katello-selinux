@@ -1,0 +1,21 @@
+#!/bin/bash
+set +e
+
+TMP=$(mktemp -t katello-selinux-enable.XXXXXXXXXX)
+trap "rm -rf '$TMP'" EXIT INT TERM
+
+for selinuxvariant in targeted
+do
+  if /usr/sbin/semodule -s $selinuxvariant -l >/dev/null; then
+    # Load policy
+    /usr/sbin/semanage module -S $selinuxvariant \
+      -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
+
+    echo "boolean -m --on httpd_setrlimit" > $TMP
+
+    /usr/sbin/semanage port -E | grep -q elasticsearch_port_t || \
+      echo "port -a -t elasticsearch_port_t -p tcp 9200-9300" >> $TMP
+
+    /usr/sbin/semanage -S $selinuxvariant -i $TMP
+  fi
+done
