@@ -30,6 +30,21 @@ require{
 
 ######################################
 #
+# Elasticsearch
+#
+
+# We carry elasticsearch policy until it is delivered to RHEL6:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1102119
+optional_policy(`
+    gen_require(`
+        type elasticsearch_port_t;
+    ')
+
+    corenet_port(elasticsearch_port_t)
+')
+
+######################################
+#
 # Katello plugin
 #
 
@@ -43,7 +58,12 @@ ifndef(`distro_rhel7', `
 ')
 
 # Katello does connect to Elasticsearch services
-allow passenger_t elasticsearch_port_t:tcp_socket name_connect;
+optional_policy(`
+    gen_require(`
+        type elasticsearch_port_t;
+    ')
+    allow passenger_t elasticsearch_port_t:tcp_socket name_connect;
+')
 
 # katello does connect to AMQP service
 corenet_tcp_connect_amqp_port(passenger_t)
@@ -51,12 +71,3 @@ corenet_tcp_connect_amqp_port(passenger_t)
 # Katello uses certs in /etc/pki/katello for websockets
 miscfiles_read_certs(websockify_t)
 
-######################################
-#
-# Elasticsearch
-#
-
-# We carry elasticsearch policy until it is delivered to RHEL6:
-# https://bugzilla.redhat.com/show_bug.cgi?id=1102119
-type elasticsearch_port_t;
-corenet_port(elasticsearch_port_t)
