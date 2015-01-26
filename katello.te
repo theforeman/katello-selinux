@@ -60,12 +60,3 @@ miscfiles_read_certs(websockify_t)
 # https://bugzilla.redhat.com/show_bug.cgi?id=1102119
 type elasticsearch_port_t;
 corenet_port(elasticsearch_port_t)
-
-######################################
-#
-# Foreman Tasks plugin
-#
-
-# the plugin daemon uses daemon gem for the backround job
-type foreman_tasks_exec_t;
-init_daemon_domain(passenger_t, foreman_tasks_exec_t)
