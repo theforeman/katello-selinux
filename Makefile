@@ -6,7 +6,7 @@ TYPE=apps
 VERSION=99.999
 PROG=katello
 PROGLONG=Katello
-TMPDIR=local-tmp
+TMPDIR=${PROG}-local-tmp
 
 ifndef DISTRO
 $(error Set the DISTRO variable e.g. rhel7 or fedora21)
@@ -72,8 +72,8 @@ consolidate-installation:
 
 remote-load:
 ifdef HOST
-	-rsync -qrav . -e ssh --exclude .git ${HOST}:policy/
-	ssh ${HOST} 'cd policy && sed -i s/@@VERSION@@/${VERSION}/ *.te && make -f /usr/share/selinux/devel/Makefile load DISTRO=${DISTRO}'
+	-rsync -qrav . -e ssh --exclude .git ${HOST}:${TMPDIR}/
+	ssh ${HOST} 'cd ${TMPDIR} && sed -i s/@@VERSION@@/${VERSION}/ *.te && make -f /usr/share/selinux/devel/Makefile load DISTRO=${DISTRO}'
 else
 	$(error You need to define your remote ssh hostname as HOST)
 endif
