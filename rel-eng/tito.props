@@ -1,5 +1,15 @@
-[buildconfig]
-builder = tito.builder.Builder
-tagger = tito.tagger.VersionTagger
+[globalconfig]
+default_builder = tito.builder.Builder
+default_tagger = tito.tagger.VersionTagger
 changelog_do_not_remove_cherrypick = 0
 changelog_format = %s (%ae)
+
+
+[katello-nightly-rhel6]
+disttag = .el6
+blacklist =
+
+[katello-nightly-rhel7]
+disttag = .el7
+blacklist =
+
