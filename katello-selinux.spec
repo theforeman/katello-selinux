@@ -36,8 +36,8 @@
 #global dashalphatag -%{alphatag}
 
 Name:           katello-selinux
-Version:        2.2.0
-Release:        0%{?dotalphatag}%{?dist}
+Version:        2.2.1
+Release:        1%{?dotalphatag}%{?dist}
 Summary:        SELinux policy module for katello
 
 Group:          System Environment/Base
@@ -127,6 +127,9 @@ fi
 %{_mandir}/man8/%{name}-relabel.8.gz
 
 %changelog
+* Wed Feb 18 2015 Justin Sherrill <jsherril@redhat.com> 2.2.1-1
+- fixing spec file name and SOURCE extension (jsherril@redhat.com)
+
 * Wed Feb 18 2015 Justin Sherrill <jsherril@redhat.com> 2.2.0-0
 - new package built with tito
 
