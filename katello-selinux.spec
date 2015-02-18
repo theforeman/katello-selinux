@@ -43,7 +43,7 @@ Summary:        SELinux policy module for katello
 Group:          System Environment/Base
 License:        GPLv3+
 URL:            http://www.katello.org
-Source0:        http://downloads.theforeman.org/%{name}/%{name}-%{version}%{?dashalphatag}.tar.bz2
+Source0:        http://downloads.theforeman.org/%{name}/%{name}-%{version}%{?dashalphatag}.tar.gz
 
 BuildRequires:  checkpolicy, selinux-policy-devel, hardlink
 BuildRequires:  policycoreutils >= %{selinux_policycoreutils_ver}
