@@ -23,6 +23,18 @@ policy_module(katello, @@VERSION@@)
 # Declarations
 #
 
+## <desc>
+## <p>
+## Determine whether passenger can connect to HTTP(s) proxy (Squid)
+## </p>
+## </desc>
+gen_tunable(passenger_can_connect_http_proxy, true)
+
+#######################################
+#
+# Declarations
+#
+
 require{
     type passenger_t;
     type websockify_t;
@@ -74,6 +86,14 @@ miscfiles_read_certs(websockify_t)
 
 # Katello connects to AMQP service
 corenet_tcp_connect_amqp_port(passenger_t)
+
+# Katello can be configured to connect to Squid
+optional_policy(`
+    tunable_policy(`passenger_can_connect_http_proxy', `
+        corenet_tcp_connect_squid_port(passenger_t)
+    ')
+')
+
 
 ######################################
 #
