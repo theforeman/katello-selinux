@@ -127,4 +127,7 @@ fi
 %{_mandir}/man8/%{name}-relabel.8.gz
 
 %changelog
+* Wed Feb 18 2015 Justin Sherrill <jsherril@redhat.com> 2.2.0-0
+- new package built with tito
+
 
