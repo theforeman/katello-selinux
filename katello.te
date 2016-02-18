@@ -72,6 +72,12 @@ optional_policy(`
     ')
 ')
 
+# Katello can be configured to read from pulp's published dir
+optional_policy(`
+    apache_read_sys_content_rw_files(passenger_t)
+    apache_read_sys_content_rw_dirs(passenger_t)
+')
+
 
 ######################################
 #
