@@ -77,6 +77,12 @@ optional_policy(`
     apache_manage_sys_content_rw(passenger_t)
 ')
 
+# Installation generates load denial
+require {
+  type load_policy_t;
+}
+userdom_write_inherited_user_tmp_files(load_policy_t)
+
 
 ######################################
 #
