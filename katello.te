@@ -78,6 +78,18 @@ optional_policy(`
     apache_manage_sys_content_rw(passenger_t)
 ')
 
+# QPID
+optional_policy(`
+  gen_require(`
+    type celery_t;
+  ')
+  ifdef(`distro_rhel6', `
+      miscfiles_manage_cert_files(celery_t)
+  ',`
+      miscfiles_manage_generic_cert_files(celery_t)
+  ')
+')
+
 
 ######################################
 #
