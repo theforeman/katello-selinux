@@ -15,3 +15,6 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see http://www.gnu.org/licenses/.
 #
+
+# Mongo db dir
+/var/lib/mongodb/ gen_context(system_u:object_r:mongod_var_lib_t,s0)
