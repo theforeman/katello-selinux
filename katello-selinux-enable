@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/bin/bash    /usr/sbin/semanage port -E | \
+      grep elasticsearch_port_t | \
+      sed s/-a/-d/g | \
+      /usr/sbin/semanage -S $selinuxvariant -i -
 set +e
 
 TMP=$(mktemp -t katello-selinux-enable.XXXXXXXXXX)
@@ -10,13 +13,6 @@ do
     # Load policy
     /usr/sbin/semanage module -S $selinuxvariant \
       -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
-
-    # Remove previously defined elasticsearch_port_t
-    # (this can be removed in future release)
-    /usr/sbin/semanage port -E | \
-      grep elasticsearch_port_t | \
-      sed s/-a/-d/g | \
-      /usr/sbin/semanage -S $selinuxvariant -i -
 
     /usr/sbin/semanage -S $selinuxvariant -i $TMP
   fi
