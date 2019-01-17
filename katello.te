@@ -46,10 +46,6 @@ require{
 # Katello plugin
 #
 
-ifndef(`distro_rhel7', `
-    consoletype_exec(passenger_t)
-')
-
 # katello does connect to AMQP service
 corenet_tcp_connect_amqp_port(passenger_t)
 
@@ -78,17 +74,3 @@ require {
   type load_policy_t;
 }
 userdom_write_inherited_user_tmp_files(load_policy_t)
-
-
-######################################
-#
-# Pulp
-#
-
-# Katello installer configures crane to listen on port 5000 with alternate 5001
-ifdef(`distro_rhel6', `
-    corenet_tcp_bind_commplex_port(httpd_t)
-',`
-    corenet_tcp_bind_commplex_main_port(httpd_t)
-    corenet_tcp_bind_commplex_link_port(httpd_t)
-')
