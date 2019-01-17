@@ -46,11 +46,6 @@ require{
 # Katello plugin
 #
 
-# System status (ping) controller checks for service status using sysvinit scripts
-# This is temporary solution until https://bugzilla.redhat.com/show_bug.cgi?id=1105085
-# is fixed.
-init_exec_script_files(passenger_t)
-
 ifndef(`distro_rhel7', `
     consoletype_exec(passenger_t)
 ')
