@@ -46,6 +46,9 @@ require{
 # Katello plugin
 #
 
+# Allow FFI library callbacks - see RM#26520 for more info
+allow passenger_t self:process execmem;
+
 # katello does connect to AMQP service
 corenet_tcp_connect_amqp_port(passenger_t)
 
