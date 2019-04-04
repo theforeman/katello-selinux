@@ -74,3 +74,13 @@ require {
   type load_policy_t;
 }
 userdom_write_inherited_user_tmp_files(load_policy_t)
+
+
+######################################
+#
+# Pulp
+#
+
+# Katello installer configures crane to listen on port 5000 with alternate 5001
+corenet_tcp_bind_commplex_main_port(httpd_t)
+corenet_tcp_bind_commplex_link_port(httpd_t)
