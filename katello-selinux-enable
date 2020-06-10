@@ -3,6 +3,7 @@ set +e
 
 TMP=$(mktemp -t katello-selinux-enable.XXXXXXXXXX)
 trap "rm -rf '$TMP'" EXIT INT TERM
+LOG=/var/log/foreman-selinux-install.log
 
 for selinuxvariant in targeted
 do
@@ -11,13 +12,16 @@ do
     /usr/sbin/semanage module -S $selinuxvariant \
       -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
 
-    # Remove previously defined elasticsearch_port_t
-    # (this can be removed in future release)
-    /usr/sbin/semanage port -E | \
-      grep elasticsearch_port_t | \
-      sed s/-a/-d/g | \
-      /usr/sbin/semanage -S $selinuxvariant -i -
+    # Assign katello custom ports
+    grep -qE 'tcp 23443' $TMP_PORTS || \
+      echo "port -a -t katello_candlepin_port_t -p tcp 23443" >> $TMP
 
-    /usr/sbin/semanage -S $selinuxvariant -i $TMP
+    # Append to log file
+    echo "$(date) $0" >> $LOG
+    cat $TMP_EXEC_BEFORE >> $LOG
+    cat $TMP_EXEC_AFTER >> $LOG
+
+    # Commit the changes
+    test -s $TMP && /usr/sbin/semanage -S $selinuxvariant -i $TMP | tee -a $LOG
   fi
 done

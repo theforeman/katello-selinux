@@ -44,10 +44,16 @@ require{
     class tcp_socket name_connect;
 }
 
+type katello_candlepin_port_t;
+corenet_port(katello_candlepin_port_t)
+
 ######################################
 #
 # Katello plugin
 #
+
+# Connections to Candlepin
+allow foreman_rails_t katello_candlepin_port_t:tcp_socket name_connect;
 
 # Candlepin Event Listener connects to Artemis
 allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
