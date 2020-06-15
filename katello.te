@@ -40,6 +40,7 @@ require{
     type websockify_t;
     type httpd_t;
     type candlepin_activemq_port_t;
+    type foreman_rails_t;
     class tcp_socket name_connect;
 }
 
@@ -53,6 +54,7 @@ allow passenger_t self:process execmem;
 
 # Candlepin Event Listener connects to Artemis
 allow passenger_t candlepin_activemq_port_t:tcp_socket name_connect;
+allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
 
 # Katello uses certs in /etc/pki/katello for websockets
 miscfiles_read_certs(websockify_t)
