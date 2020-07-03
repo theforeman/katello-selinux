@@ -33,6 +33,7 @@ require{
     type passenger_t;
     type websockify_t;
     type candlepin_activemq_port_t;
+    type tomcat_t;
     class tcp_socket name_connect;
 }
 
@@ -46,6 +47,9 @@ corenet_port(katello_candlepin_port_t)
 
 # Connections to Candlepin
 allow foreman_rails_t katello_candlepin_port_t:tcp_socket name_connect;
+
+# Allow to bind to Candlepin
+allow tomcat_t katello_candlepin_port_t:tcp_socket name_bind;
 
 # Candlepin Event Listener connects to Artemis
 allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
