@@ -35,7 +35,8 @@ gen_tunable(foreman_rails_can_connect_http_proxy, true)
 # Declarations
 #
 
-require{
+require {
+    type bin_t;
     type foreman_rails_t;
     type passenger_t;
     type websockify_t;
@@ -97,6 +98,13 @@ optional_policy(`
     apache_manage_sys_content_rw(passenger_t)
 ')
 # </REMOVE>
+
+######################################
+#
+# Foreman Red Hat Cloud plugin
+#
+
+typealias bin_t alias foreman_uploader_bin_t;
 
 ######################################
 #
