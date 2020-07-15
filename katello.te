@@ -23,13 +23,6 @@ policy_module(katello, @@VERSION@@)
 # Declarations
 #
 
-## <desc>
-## <p>
-## Determine whether passenger can connect to HTTP(s) proxy (Squid)
-## </p>
-## </desc>
-gen_tunable(foreman_rails_can_connect_http_proxy, true)
-
 #######################################
 #
 # Declarations
@@ -60,14 +53,6 @@ allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
 
 # Katello uses certs in /etc/pki/katello for websockets
 miscfiles_read_certs(websockify_t)
-
-# Katello can be configured to connect to Squid
-optional_policy(`
-    tunable_policy(`foreman_rails_can_connect_http_proxy', `
-        corenet_tcp_connect_squid_port(foreman_rails_t)
-        corenet_tcp_connect_http_cache_port(foreman_rails_t)
-    ')
-')
 
 # Katello can be configured to read from pulp's published dir
 optional_policy(`
