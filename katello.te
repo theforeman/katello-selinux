@@ -32,7 +32,6 @@ require{
     type foreman_rails_t;
     type passenger_t;
     type websockify_t;
-    type httpd_t;
     type candlepin_activemq_port_t;
     class tcp_socket name_connect;
 }
@@ -82,12 +81,3 @@ optional_policy(`
     apache_manage_sys_content_rw(passenger_t)
 ')
 # </REMOVE>
-
-######################################
-#
-# Pulp
-#
-
-# Katello installer configures crane to listen on port 5000 with alternate 5001
-corenet_tcp_bind_commplex_main_port(httpd_t)
-corenet_tcp_bind_commplex_link_port(httpd_t)

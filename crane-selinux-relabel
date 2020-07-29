@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# crane policy does not carry any file context
+
+exit 0
