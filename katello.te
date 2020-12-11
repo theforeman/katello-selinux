@@ -50,6 +50,7 @@ allow foreman_rails_t katello_candlepin_port_t:tcp_socket name_connect;
 
 # Allow to bind to Candlepin
 allow tomcat_t katello_candlepin_port_t:tcp_socket name_bind;
+allow tomcat_t katello_candlepin_port_t:tcp_socket name_connect;
 
 # Candlepin Event Listener connects to Artemis
 allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
