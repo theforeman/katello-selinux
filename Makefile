@@ -13,18 +13,14 @@ endif
 all: policy all-data
 
 policy: \
-	katello.pp.bz2 \
-	crane.pp.bz2
+	katello.pp.bz2
 
 all-data: man-pages
 
 man-pages: \
 	katello-selinux-enable.8 \
 	katello-selinux-disable.8 \
-	katello-selinux-relabel.8 \
-	crane-selinux-enable.8 \
-	crane-selinux-disable.8 \
-	crane-selinux-relabel.8
+	katello-selinux-relabel.8
 
 katello-selinux-enable.8: common/selinux-enable.pod.in.sh
 	bash $< "katello" "Foreman" | \
@@ -37,18 +33,6 @@ katello-selinux-disable.8: common/selinux-disable.pod.in.sh
 katello-selinux-relabel.8: common/selinux-relabel.pod.in.sh
 	bash $< "katello" "Foreman" | \
 		pod2man --name="${@:.8=}" -c "katello" --section=8 --release=${VERSION} > $@
-
-crane-selinux-enable.8: common/selinux-enable.pod.in.sh
-	bash $< "crane" "Crane" | \
-		pod2man --name="${@:.8=}" -c "crane" --section=8 --release=${VERSION} > $@
-
-crane-selinux-disable.8: common/selinux-disable.pod.in.sh
-	bash $< "crane" "Crane" | \
-		pod2man --name="${@:.8=}" -c "crane" --section=8 --release=${VERSION} > $@
-
-crane-selinux-relabel.8: common/selinux-relabel.pod.in.sh
-	bash $< "crane" "Crane" | \
-		pod2man --name="${@:.8=}" -c "crane" --section=8 --release=${VERSION} > $@
 
 %.pp: %.te
 	-mkdir ${TMPDIR} || rm -rf ${TMPDIR}/*
@@ -93,4 +77,4 @@ else
 endif
 
 clean:
-	rm -rf *.pp *.pp.bz2 tmp/ local-tmp/ *.8 katello-*-selinux-enable katello-*-selinux-disable crane-*-selinux-enable crane-*-selinux-disable
+	rm -rf *.pp *.pp.bz2 tmp/ local-tmp/ *.8 katello-*-selinux-enable katello-*-selinux-disable
