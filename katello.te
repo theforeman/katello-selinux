@@ -69,6 +69,10 @@ require {
 }
 userdom_write_inherited_user_tmp_files(load_policy_t)
 
+# Allow the ping controller to check pulpcore-api service
+# https://projects.theforeman.org/issues/31169
+allow foreman_rails_t systemd_unit_file_t:dir search;
+
 ######################################
 #
 # Katello plugin - passenger rules
