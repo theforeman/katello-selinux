@@ -34,6 +34,7 @@ require{
     type websockify_t;
     type candlepin_activemq_port_t;
     type tomcat_t;
+    type systemd_unit_file_t;
     class tcp_socket name_connect;
 }
 
