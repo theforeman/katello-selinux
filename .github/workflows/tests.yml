@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install packages
-        run: yum install -y selinux-policy-devel policycoreutils
+        run: yum install -y selinux-policy-devel policycoreutils bzip2 perl-podlators
       - name: Build policies
         run: make all DISTRO=rhel${{ matrix.centos }}
