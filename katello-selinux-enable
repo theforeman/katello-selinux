@@ -22,8 +22,7 @@ do
 
     # Append to log file
     echo "$(date) $0" >> $LOG
-    cat $TMP_EXEC_BEFORE >> $LOG
-    cat $TMP_EXEC_AFTER >> $LOG
+    cat $TMP >> $LOG
 
     # Commit the changes
     test -s $TMP && /usr/sbin/semanage -S $selinuxvariant -i $TMP | tee -a $LOG
