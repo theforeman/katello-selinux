@@ -2,7 +2,8 @@
 set +e
 
 TMP=$(mktemp -t katello-selinux-enable.XXXXXXXXXX)
-trap "rm -rf '$TMP'" EXIT INT TERM
+TMP_PORTS=$(mktemp -t katello-selinux-enable-ports.XXXXX)
+trap "rm -rf '$TMP' '$TMP_PORTS'" EXIT INT TERM
 LOG=/var/log/foreman-selinux-install.log
 
 for selinuxvariant in targeted
@@ -11,6 +12,9 @@ do
     # Load policy
     /usr/sbin/semanage module -S $selinuxvariant \
       -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
+
+    # Create port list cache
+    /usr/sbin/semanage port -E > $TMP_PORTS
 
     # Assign katello custom ports
     grep -qE 'tcp 23443' $TMP_PORTS || \
