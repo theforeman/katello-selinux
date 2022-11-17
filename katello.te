@@ -34,7 +34,6 @@ require{
     type websockify_t;
     type candlepin_activemq_port_t;
     type tomcat_t;
-    type systemd_unit_file_t;
     class tcp_socket name_connect;
 }
 
@@ -73,7 +72,3 @@ require {
   type load_policy_t;
 }
 userdom_write_inherited_user_tmp_files(load_policy_t)
-
-# Allow the ping controller to check pulpcore-api service
-# https://projects.theforeman.org/issues/31169
-allow foreman_rails_t systemd_unit_file_t:dir search;
