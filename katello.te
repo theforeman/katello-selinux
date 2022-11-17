@@ -31,7 +31,6 @@ policy_module(katello, @@VERSION@@)
 require{
     type amqp_port_t;
     type foreman_rails_t;
-    type passenger_t;
     type websockify_t;
     type candlepin_activemq_port_t;
     type tomcat_t;
@@ -78,20 +77,3 @@ userdom_write_inherited_user_tmp_files(load_policy_t)
 # Allow the ping controller to check pulpcore-api service
 # https://projects.theforeman.org/issues/31169
 allow foreman_rails_t systemd_unit_file_t:dir search;
-
-######################################
-#
-# Katello plugin - passenger rules
-# (to be removed in 2.2 or later)
-#
-
-# <REMOVE>
-allow passenger_t self:process execmem;
-allow passenger_t candlepin_activemq_port_t:tcp_socket name_connect;
-corenet_tcp_connect_squid_port(passenger_t)
-corenet_tcp_connect_http_cache_port(passenger_t)
-optional_policy(`
-    apache_manage_sys_content(passenger_t)
-    apache_manage_sys_content_rw(passenger_t)
-')
-# </REMOVE>
