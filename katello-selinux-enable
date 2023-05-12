@@ -27,6 +27,6 @@ do
     # Commit the changes
     if test -s $TMP; then
       /usr/sbin/semanage -S $selinuxvariant -i $TMP | tee -a $LOG
-    end
+    fi
   fi
 done
