@@ -10,16 +10,11 @@ To locally compile the policy do something like:
 
     PCY=katello
     sed -i s/@@VERSION@@/99.9/ $PCY.te
-    make -f /usr/share/selinux/devel/Makefile load DISTRO=rhel7 NAME=$PCY
-
-Make sure you provide the correct distribution. Possible values are:
-
-* fedoraN (defines m4 macro `distro_fedoraN`)
-* rhelN (defines m4 macro `distro_rhelN`)
+    make -f /usr/share/selinux/devel/Makefile load NAME=$PCY
 
 There's a target to do this on remote system via ssh:
 
-    make remote-load HOST=my.host.lan DISTRO=rhel7
+    make remote-load HOST=my.host.lan
 
 License
 -------

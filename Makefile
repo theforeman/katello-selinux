@@ -6,10 +6,6 @@ TYPE=apps
 VERSION=99.999
 TMPDIR=katello-local-tmp
 
-ifndef DISTRO
-$(error Set the DISTRO variable e.g. rhel7 or fedora21)
-endif
-
 all: policy all-data
 
 policy: \
@@ -38,7 +34,7 @@ katello-selinux-relabel.8: common/selinux-relabel.pod.in.sh
 	-mkdir ${TMPDIR} || rm -rf ${TMPDIR}/*
 	cp $< ${<:.te=.fc} $< ${<:.te=.if} ${TMPDIR}/
 	sed -i 's/@@VERSION@@/${VERSION}/' ${TMPDIR}/*.te
-	make -C ${TMPDIR} -f /usr/share/selinux/devel/Makefile NAME=${VARIANT} DISTRO=$(DISTRO)
+	make -C ${TMPDIR} -f /usr/share/selinux/devel/Makefile NAME=${VARIANT}
 	mv ${TMPDIR}/$@ .
 
 %.pp.bz2: %.pp
@@ -71,7 +67,7 @@ consolidate-installation:
 remote-load:
 ifdef HOST
 	-rsync -qrav . -e ssh --exclude .git ${HOST}:${TMPDIR}/
-	ssh ${HOST} 'cd ${TMPDIR} && sed -i s/@@VERSION@@/${VERSION}/ *.te && make -f /usr/share/selinux/devel/Makefile load DISTRO=${DISTRO}'
+	ssh ${HOST} 'cd ${TMPDIR} && sed -i s/@@VERSION@@/${VERSION}/ *.te && make -f /usr/share/selinux/devel/Makefile load
 else
 	$(error You need to define your remote ssh hostname as HOST)
 endif
