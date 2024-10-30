@@ -6,27 +6,25 @@ TMP_PORTS=$(mktemp -t katello-selinux-enable-ports.XXXXX)
 trap "rm -rf '$TMP' '$TMP_PORTS'" EXIT INT TERM
 LOG=/var/log/foreman-selinux-install.log
 
-for selinuxvariant in targeted
-do
-  if /usr/sbin/semodule -s $selinuxvariant -l >/dev/null; then
-    # Load policy
-    /usr/sbin/semanage module -S $selinuxvariant \
-      -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
+selinuxvariant=targeted
+if /usr/sbin/semodule -s $selinuxvariant -l >/dev/null; then
+  # Load policy
+  /usr/sbin/semanage module -S $selinuxvariant \
+    -a /usr/share/selinux/${selinuxvariant}/katello.pp.bz2
 
-    # Create port list cache
-    /usr/sbin/semanage port -E > $TMP_PORTS
+  # Create port list cache
+  /usr/sbin/semanage port -E > $TMP_PORTS
 
-    # Assign katello custom ports
-    grep -qE 'tcp 23443' $TMP_PORTS || \
-      echo "port -a -t katello_candlepin_port_t -p tcp 23443" >> $TMP
+  # Assign katello custom ports
+  grep -qE 'tcp 23443' $TMP_PORTS || \
+    echo "port -a -t katello_candlepin_port_t -p tcp 23443" >> $TMP
 
-    # Append to log file
-    echo "$(date) $0" >> $LOG
-    cat $TMP >> $LOG
+  # Append to log file
+  echo "$(date) $0" >> $LOG
+  cat $TMP >> $LOG
 
-    # Commit the changes
-    if test -s $TMP; then
-      /usr/sbin/semanage -S $selinuxvariant -i $TMP | tee -a $LOG
-    fi
+  # Commit the changes
+  if test -s $TMP; then
+    /usr/sbin/semanage -S $selinuxvariant -i $TMP | tee -a $LOG
   fi
-done
+fi
