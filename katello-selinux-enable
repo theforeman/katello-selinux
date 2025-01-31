@@ -18,6 +18,8 @@ if /usr/sbin/semodule -s $selinuxvariant -l >/dev/null; then
   # Assign katello custom ports
   grep -qE 'tcp 23443' $TMP_PORTS || \
     echo "port -a -t katello_candlepin_port_t -p tcp 23443" >> $TMP
+  grep -qE 'tcp 24443' $TMP_PORTS || \
+    echo "port -a -t katello_iop_advisor_engine_port_t -p tcp 24443" >> $TMP
 
   # Append to log file
   echo "$(date) $0" >> $LOG
