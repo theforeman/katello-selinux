@@ -40,6 +40,9 @@ require{
 type katello_candlepin_port_t;
 corenet_port(katello_candlepin_port_t)
 
+type katello_iop_advisor_engine_port_t;
+corenet_port(katello_iop_advisor_engine_port_t)
+
 ######################################
 #
 # Katello plugin
@@ -66,3 +69,12 @@ require {
   type load_policy_t;
 }
 userdom_write_inherited_user_tmp_files(load_policy_t)
+
+######################################
+#
+# Foreman RH Cloud plugin
+#
+
+# The plugin makes connections to the local IOP Advisor Engine
+
+allow foreman_rails_t katello_iop_advisor_engine_port_t:tcp_socket name_connect;
