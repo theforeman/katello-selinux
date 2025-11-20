@@ -15,7 +15,7 @@ jobs:
     container:
       image: ${{ matrix.container }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils bzip2 perl-podlators
