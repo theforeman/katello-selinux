@@ -29,10 +29,8 @@ policy_module(katello, @@VERSION@@)
 #
 
 require{
-    type amqp_port_t;
     type foreman_rails_t;
     type websockify_t;
-    type candlepin_activemq_port_t;
     type tomcat_t;
     class tcp_socket name_connect;
 }
@@ -54,12 +52,6 @@ allow foreman_rails_t katello_candlepin_port_t:tcp_socket name_connect;
 # Allow to bind to Candlepin
 allow tomcat_t katello_candlepin_port_t:tcp_socket name_bind;
 allow tomcat_t katello_candlepin_port_t:tcp_socket name_connect;
-
-# Candlepin Event Listener connects to Artemis
-allow foreman_rails_t candlepin_activemq_port_t:tcp_socket name_connect;
-
-# Katello connection to qpid for katello agent
-allow foreman_rails_t amqp_port_t:tcp_socket name_connect;
 
 # Katello uses certs in /etc/pki/katello for websockets
 miscfiles_read_certs(websockify_t)
